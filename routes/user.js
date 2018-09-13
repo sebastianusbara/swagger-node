@@ -10,7 +10,7 @@ const getUser = function (app, userId) {
     SELECT
 	  *
     FROM user
-    WHERE user_id=?`;
+    WHERE id=?`;
 
 		source.execute(query, [userId], (err, result) => {
 			if(err) return reject(err);
@@ -38,7 +38,7 @@ const getUser = function (app, userId) {
  *     tags:
  *        - User
  */
-router.post("/user/getUser",
+router.get("/user/getUser",
 	validateRequest({
 		user_id: {
 			notEmpty: true,
@@ -47,14 +47,12 @@ router.post("/user/getUser",
 	}),
 	(req, res) => {
 		let userId = req.query.user_id;
-		console.log("konsisten");
 
 		Promise.all([
 			getUser(req.app, userId)
 		]).then(result => {
-			console.log(result);
 			return res.send({
-				data: responseList[0]
+				data: result[0]
 			})
 		}).catch(e =>{
 			res.status(500).send(e.message);

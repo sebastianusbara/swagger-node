@@ -1,0 +1,15 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "sys": {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "database": "sys",
+    "password": "",
+    "name": "dhani",
+    "user": "root",
+    "connector": "mysql"
+  }
+}
