@@ -22,7 +22,7 @@ router.use(user);
 const swaggerSpec = swaggerJSDoc({
 	swaggerDefinition: {
 		info: {
-			title: "Band Dhani",
+			title: "Cuisine Bucket List - Sebastianus Bara",
 			version: "v2.0",
 		}
 	},
@@ -47,7 +47,7 @@ router.use(
 		customCss,
 		customFavicon,
 		swaggerUrl,
-		"Bang Dhani",
+		"Food API",
 		(req, res, next) => {
 			next();
 		}

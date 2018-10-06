@@ -3,13 +3,13 @@
     "name": "db",
     "connector": "memory"
   },
-  "sys": {
+  "jenius": {
     "host": "127.0.0.1",
     "port": 3306,
-    "database": "sys",
-    "password": "",
-    "name": "dhani",
-    "user": "root",
+    "database": "jenius",
+    "password": "password",
+    "name": "jenius",
+    "user": "bara",
     "connector": "mysql"
   }
 }
