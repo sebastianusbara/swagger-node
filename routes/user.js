@@ -3,14 +3,13 @@ const validateRequest = require('../middlewares/validateRequest');
 let router = express.Router();
 let getDataSource = require("../getDataSource");
 
-const getUser = function (app, userId) {
+const getCuisine = function (app, userId) {
 	return new Promise((resolve, reject) => {
 		let source = getDataSource(app);
 		let query = `
     SELECT
 	  *
-    FROM user
-    WHERE id=?`;
+    FROM food`;
 
 		source.execute(query, [userId], (err, result) => {
 			if(err) return reject(err);
@@ -21,35 +20,20 @@ const getUser = function (app, userId) {
 
 /**
  * @swagger
- * /user/getUser:
+ * /cuisine/getCuisine:
  *   get:
- *     parameters:
- *       - in: query
- *         name: user_id
- *         description: User ID
- *         schema:
- *           type: string
- *         required: true
- *
  *     responses:
  *       200:
  *         description: success
  *
  *     tags:
- *        - User
+ *        - Cuisine
  */
-router.get("/user/getUser",
-	validateRequest({
-		user_id: {
-			notEmpty: true,
-			errorMessage: "user_id cannot be empty"
-		},
-	}),
+router.get("/cuisine/getCuisine",
 	(req, res) => {
-		let userId = req.query.user_id;
 
 		Promise.all([
-			getUser(req.app, userId)
+			getCuisine(req.app)
 		]).then(result => {
 			return res.send({
 				data: result[0]
