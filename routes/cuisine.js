@@ -45,6 +45,18 @@ const deleteCuisine = function (app, id) {
 	});
 };
 
+const editCuisine = function (app, id, name, desc) {
+	return new Promise((resolve, reject) => {
+		let source = getDataSource(app);
+		let query = `UPDATE food SET name=?,description=? WHERE id=?`;
+
+		source.execute(query, [name, desc, id], (err, result) => {
+			if(err) return reject(err);
+			return resolve(result);
+		});
+	});
+};
+
 /**
  * @swagger
  * /cuisine:
@@ -139,6 +151,55 @@ router.delete("/cuisine/:id",
 		]).then(result => {
 			return res.send({
 				message: "Delete Success"
+			})
+		}).catch(e =>{
+			res.status(500).send(e.message);
+		});
+	});
+
+/**
+ * @swagger
+ * /cuisine/{id}:
+ *   patch:
+ *     consumes:
+ *       - application/x-www-form-urlencoded
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: E.g. -> 1, 5
+ *         schema:
+ *           type: integer
+ *         required: true
+ *       - in: formData
+ *         name: name
+ *         description: E.g. -> Soto, Karedok, etc
+ *         schema:
+ *           type: string
+ *         required: true
+ *       - in: formData
+ *         name: description
+ *         description: E.g. -> Soto adalah makanan nikmat khas Jawa
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: success
+ *
+ *     tags:
+ *        - Cuisine
+ */
+router.patch("/cuisine/:id",
+	(req, res) => {
+		let id = req.params.id;
+		let name = req.body.name;
+		let desc = req.body.description;
+
+		Promise.all([
+			editCuisine(req.app, id, name, desc)
+		]).then(result => {
+			return res.send({
+				message: "Edit Success"
 			})
 		}).catch(e =>{
 			res.status(500).send(e.message);
