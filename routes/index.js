@@ -6,7 +6,7 @@ const expressValidator = require('express-validator');
 const path = require('path');
 
 //api routes
-const user = require('./user');
+const cuisine = require('./cuisine');
 
 let router = express.Router();
 router.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
@@ -18,7 +18,7 @@ router.use(expressValidator({
 }));
 
 //router use for api
-router.use(user);
+router.use(cuisine);
 const swaggerSpec = swaggerJSDoc({
 	swaggerDefinition: {
 		info: {
